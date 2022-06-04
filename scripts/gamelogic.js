@@ -1,34 +1,57 @@
-var area = [
-    [4, 7, 11, 2],
-    [5, "", 8, 3],
-    [1, 9, 14, 12],
-    [6, 10, 13, 15]
-]
+const spaceValue = '';
 
+const winResultArea = [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, spaceValue],
+];
+
+var area = [
+    [1, 2, 3, 4],
+    [5, 6, 7, 8],
+    [9, 10, 11, 12],
+    [13, 14, 15, spaceValue],
+];
+
+onclickInit();
+fillRandomArea();
 initGameBoard();
 
+function onclickInit() {
+    let tds = document.getElementsByTagName('td');
+    for (const td of tds) {
+        td.onclick = (event) => {
+            changeCell(event.target.textContent);
+        }
+    }
+}
+
+function fillRandomArea() {
+    let yRand, xRand, tempValue;
+    for (let y = 3; y >= 0; y--) {
+        for (let x = 3; x >= 0; x--) {
+            yRand = Math.floor(Math.random()*(y + 1));
+            xRand = Math.floor(Math.random()*(x + 1));
+            tempValue = area[y][x];
+            area[y][x] = area[yRand][xRand];
+            area[yRand][xRand] = tempValue;
+        }
+    }
+}
+
 function initGameBoard() {
-    $("#0-0")[0].textContent = area[0][0];
-    $("#1-0")[0].textContent = area[1][0];
-    $("#2-0")[0].textContent = area[2][0];
-    $("#3-0")[0].textContent = area[3][0];
-    $("#0-1")[0].textContent = area[0][1];
-    $("#1-1")[0].textContent = area[1][1];
-    $("#2-1")[0].textContent = area[2][1];
-    $("#3-1")[0].textContent = area[3][1];
-    $("#0-2")[0].textContent = area[0][2];
-    $("#1-2")[0].textContent = area[1][2];
-    $("#2-2")[0].textContent = area[2][2];
-    $("#3-2")[0].textContent = area[3][2];
-    $("#0-3")[0].textContent = area[0][3];
-    $("#1-3")[0].textContent = area[1][3];
-    $("#2-3")[0].textContent = area[2][3];
-    $("#3-3")[0].textContent = area[3][3];
+    for (let y = 0; y < 4; y++) {
+        for (let x = 0; x < 4; x++) {
+            let cell = document.getElementById(`${x}-${y}`);
+            cell.innerText = area[y][x];
+        }
+    }
 }
 
 function changeCell(num) {
     //Ищем "координаты" элемента
-    var x = 0, y = 0;
+    var x, y;
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             if (area[i][j] == num) {
@@ -39,35 +62,52 @@ function changeCell(num) {
     }
     //Проверяем, есть ли элемент со значением 0 (пустой квадрат) с какой-либо стороны, меняем местами значения если так.
     try {
-        if (area[x - 1][y] == "") {
-            area[x][y] = ""
+        if (area[x - 1][y] == spaceValue) {
+            area[x][y] = spaceValue;
             area[x - 1][y] = num;
         }
     }
     catch { };
 
     try {
-        if (area[x + 1][y] == "") {
-            area[x][y] = ""
+        if (area[x + 1][y] == spaceValue) {
+            area[x][y] = spaceValue;
             area[x + 1][y] = num;
         }
     }
     catch { };
 
     try {
-        if (area[x][y - 1] == "") {
-            area[x][y] = ""
+        if (area[x][y - 1] == spaceValue) {
+            area[x][y] = spaceValue;
             area[x][y - 1] = num;
         }
     }
     catch { };
 
     try {
-        if (area[x][y + 1] == "") {
-            area[x][y] = ""
+        if (area[x][y + 1] == spaceValue) {
+            area[x][y] = spaceValue;
             area[x][y + 1] = num;
         }
     }
     catch { };
+
+    if (checkWin()) {
+        alert("Win!");
+        fillRandomArea();
+    }
+
     initGameBoard();
+}
+
+function checkWin() {
+    for (let y = 0; y < 4; y++) {
+        for (let x = 0; x < 4; x++) {
+            if (winResultArea[x][y] != area[x][y]) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

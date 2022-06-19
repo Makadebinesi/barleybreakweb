@@ -149,7 +149,7 @@ function moveCells(cellIdOne, cellIdTwo, cellOneAnimDirection) {
     }
 
     let animOpt = {
-        duration: 100,
+        duration: 150,
     }
 
     cont1.animate([

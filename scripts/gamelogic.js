@@ -25,9 +25,14 @@ var area = [
 
 (function () {
     onclickInit();
-    winTestFillArea(); //winTestFillArea - для тестирования логики завершения
-    initGameBoard();
+    refresh();
 }());
+
+function refresh() {
+    fillRandomArea(); //winTestFillArea - для тестирования логики завершения
+    initGameBoard();
+    document.querySelector('.win-label').hidden = true;
+}
 
 function onclickInit() {
     let tds = document.getElementsByTagName('td');
@@ -108,12 +113,11 @@ function changeCell(cellId, cellValue) {
     }
     catch { };
 
-    
+    let winLabel = document.querySelector('.win-label');
     if (checkWin()) {
-        if (confirm("Победа! Начать заново?")) {
-            fillRandomArea();
-            initGameBoard();
-        }
+        winLabel.hidden = false;
+    } else {
+        winLabel.hidden = true;
     }
 }
 

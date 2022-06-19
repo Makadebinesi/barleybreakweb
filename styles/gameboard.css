@@ -26,3 +26,30 @@ td {
     font-size: 30px;
     margin: auto;
 }
+
+.refresh-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.refresh-icon {
+    width: 40px; 
+    height: 40px;
+    fill: gray;
+}
+
+.refresh-icon:hover {
+    fill: black;
+}
+
+.refresh-icon:active {
+    fill: white;
+}
+
+.win-label {
+    text-align: center;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 20px;
+    margin-bottom: 15px;
+}

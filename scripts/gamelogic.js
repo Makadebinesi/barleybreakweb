@@ -2,11 +2,18 @@
 
 const spaceValue = '';
 
-const winResultArea = [
+const winResultArea1 = [
     [1, 2, 3, 4],
     [5, 6, 7, 8],
     [9, 10, 11, 12],
     [13, 14, 15, spaceValue],
+];
+
+const winResultArea2 = [
+    [spaceValue, 1, 2, 3],
+    [4, 5, 6, 7],
+    [8, 9, 10, 11],
+    [12, 13, 14, 15],
 ];
 
 var testWinArea = [
@@ -173,6 +180,11 @@ function getContentBlock(cellId) {
 }
 
 function checkWin() {
+    return checkWinResultArea(winResultArea1) ? true : 
+        checkWinResultArea(winResultArea2) ? true : false;
+}
+
+function checkWinResultArea(winResultArea) {
     for (let y = 0; y < 4; y++) {
         for (let x = 0; x < 4; x++) {
             if (winResultArea[x][y] != area[x][y]) {
